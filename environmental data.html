@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>environmental data</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
+  </head>
+  <div class="clock_and_logo">
+    
+    <div class="clock">
+    <span class="timer">
+      <!--digital clock start-->
+      <div class="datetime">
+        <div class="date">
+          <span id="dayname">Day</span>,
+          <span id="month">Month</span>
+          <span id="daynum">00</span>,
+          <span id="year">Year</span>
+        </div>
+        <div class="time">
+          <span id="hour">00</span>: <span id="minutes">00</span>:
+          <span id="seconds">00</span>
+          <span id="period">AM</span>
+        </div>
+      </div>
+      <!--digital clock end--></span
+    >
+  </div>
+
+  <div class="my_logo">
+    <header id="header">
+      <div class="inner">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <span class="symbol"><img src="images/yaka logo.png" alt="" /></span
+          ><span class="title">Umeshmb_ </span>
+        </a></div>
+  
+  <body class="is-preload" onload="initClock()">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <div class="inner">
+          
+          <!-- Nav -->
+          <nav>
+            <ul>
+              <li><a href="#menu">Menu</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Menu -->
+      <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="environmental data.html">Environmental Data</a></li>
+          <li><a href="environmental data.html">Soil Data </a></li>
+          <li><a href="environmental data.html"> Rover</a></li>
+          <li><a href="elements.html">Elements</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <header>
+            <span class="symbol">
+              <script type="text/javascript">
+                function updateClock() {
+                  var now = new Date();
+                  var dname = now.getDay(),
+                    mo = now.getMonth(),
+                    dnum = now.getDate(),
+                    yr = now.getFullYear(),
+                    hou = now.getHours(),
+                    min = now.getMinutes(),
+                    sec = now.getSeconds(),
+                    pe = "AM";
+
+                  if (hou >= 12) {
+                    pe = "PM";
+                  }
+                  if (hou == 0) {
+                    hou = 12;
+                  }
+                  if (hou > 12) {
+                    hou = hou - 12;
+                  }
+
+                  Number.prototype.pad = function (digits) {
+                    for (var n = this.toString(); n.length < digits; n = 0 + n);
+                    return n;
+                  };
+
+                  var months = [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "Augest",
+                    "September",
+                    "October",
+                    "November",
+                    "December",
+                  ];
+                  var week = [
+                    "Sunday",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                  ];
+                  var ids = [
+                    "dayname",
+                    "month",
+                    "daynum",
+                    "year",
+                    "hour",
+                    "minutes",
+                    "seconds",
+                    "period",
+                  ];
+                  var values = [
+                    week[dname],
+                    months[mo],
+                    dnum.pad(2),
+                    yr,
+                    hou.pad(2),
+                    min.pad(2),
+                    sec.pad(2),
+                    pe,
+                  ];
+                  for (var i = 0; i < ids.length; i++)
+                    document.getElementById(ids[i]).firstChild.nodeValue =
+                      values[i];
+                }
+
+                function initClock() {
+                  updateClock();
+                  window.setInterval("updateClock()", 1);
+                }
+              </script>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <h1 class="en_h1">Environmental Data</h1>
+
+          <section class="tiles_environment">
+            <article class="style1">
+              <p class="environment_data">Temperature</p>
+              <iframe
+                class="basic_data_plot"
+                width="400"
+                height="250"
+                style="border: 2.5px solid rgb(90, 90, 90)"
+                src="https://thingspeak.com/channels/2013680/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Ambient+temperature&type=column"
+              ></iframe>
+            </article>
+
+            <article class="style2">
+              <p class="environment_data">Humidity</p>
+              <iframe
+                class="basic_data_plot"
+                width="400"
+                height="250"
+                style="border: 2.5px solid rgb(90, 90, 90)"
+                src="https://thingspeak.com/channels/2013680/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=100&title=Humdity&type=column"
+              ></iframe>
+            </article>
+            <article class="style3">
+              <p class="environment_data">Ambient Light Intensity</p>
+              <iframe
+                class="lux_num"
+                width="210"
+                height="250"
+                style="border: 2.5px solid rgb(90, 90, 90)"
+                src="https://thingspeak.com/channels/2013680/widgets/593881"
+              ></iframe>
+            </article>
+          </section>
+          <section class="tiles_environment">
+            <article>
+              <p class="environment_data" margin="1">
+                Temperature and Humiduty
+              </p>
+              <iframe
+                class="basic_data_plot1"
+                width="500"
+                height="280"
+                style="border: 3px solid rgb(90, 90, 90)"
+                src="https://thingspeak.com/apps/matlab_visualizations/494987"
+              ></iframe>
+            </article>
+          </section>
+          <p>....................Description........</p>
+          <p>..........</p>
+          <p>.......</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <div class="inner">
+          <section>
+            <h2>Get in touch</h2>
+            <form method="post" action="#">
+              <div class="fields">
+                <div class="field half">
+                  <input type="text" name="name" id="name" placeholder="Name" />
+                </div>
+                <div class="field half">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div class="field">
+                  <textarea
+                    name="message"
+                    id="message"
+                    placeholder="Message"
+                  ></textarea>
+                </div>
+              </div>
+              <ul class="actions">
+                <li><input type="submit" value="Send" class="primary" /></li>
+              </ul>
+            </form>
+          </section>
+          <section>
+            <h2>Follow</h2>
+            <ul class="icons">
+              <li>
+                <a href="#" class="icon brands style2 fa-twitter"
+                  ><span class="label">Twitter</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-facebook-f"
+                  ><span class="label">Facebook</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-instagram"
+                  ><span class="label">Instagram</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-dribbble"
+                  ><span class="label">Dribbble</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/umeshmb99"
+                  class="icon brands style2 fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-500px"
+                  ><span class="label">500px</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon solid style2 fa-phone"
+                  ><span class="label">Phone</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon solid style2 fa-envelope"
+                  ><span class="label">Email</span></a
+                >
+              </li>
+            </ul>
+          </section>
+          <ul class="copyright">
+            <li>&copy; Umeshmb_. All rights reserved</li>
+            
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

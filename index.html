@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Agri_Bot@nitr</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
+
+    <script src="https://maps.googleapis.com/maps/api/js?AIzaSyBWYD1Vq7uTtCU36SZuC8M6TJIKTNtWPr4"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+      var map;
+      var x;
+      function loadmaps() {
+        $.getJSON(
+          "https://api.thingspeak.com/channels/2013680/fields/4/last.json?I146ATYZLJKAWAEG",
+          function (result) {
+            var m = result;
+            x = Number(m.field4);
+            //alert(x);
+          }
+        );
+        $.getJSON(
+          "https://api.thingspeak.com/channels/2013680/fields/5/last.json?I146ATYZLJKAWAEG",
+          function (result) {
+            var m = result;
+            y = Number(m.field5);
+          }
+        ).done(function () {
+          initialize();
+        });
+      }
+      window.setInterval(function () {
+        loadmaps();
+      }, 9000);
+      function initialize() {
+        //alert(y);
+        var mapOptions = {
+          zoom: 18,
+          center: { lat: x, lng: y },
+        };
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        var marker = new google.maps.Marker({
+          position: { lat: x, lng: y },
+          map: map,
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+          content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+        });
+
+        google.maps.event.addListener(marker, "click", function () {
+          infowindow.open(map, marker);
+        });
+      }
+
+      google.maps.event.addDomListener(window, "load", initialize);
+    </script>
+  </head>
+  <div class="clock_and_logo">
+    
+    <div class="clock">
+    <span class="timer">
+      <!--digital clock start-->
+      <div class="datetime">
+        <div class="date">
+          <span id="dayname">Day</span>,
+          <span id="month">Month</span>
+          <span id="daynum">00</span>,
+          <span id="year">Year</span>
+        </div>
+        <div class="time">
+          <span id="hour">00</span>: <span id="minutes">00</span>:
+          <span id="seconds">00</span>
+          <span id="period">AM</span>
+        </div>
+      </div>
+      <!--digital clock end--></span
+    >
+  </div>
+
+  <div class="my_logo">
+    <header id="header">
+      <div class="inner">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <span class="symbol"><img src="images/yaka logo.png" alt="" /></span
+          ><span class="title">Umeshmb_ </span>
+        </a></div>
+  
+
+        <!-- Nav -->
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <div class="top_hl">
+    <h1 class="main_h1">Agricultural Field Monitoring Dashboard</h1>
+  </div>
+
+  <body class="is-preload" onload="initClock()">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+
+      <!-- Menu -->
+      <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="environmental data.html">Environmental Data</a></li>
+          <li><a href="environmental data.html">Soil Data </a></li>
+          <li><a href="environmental data.html"> Rover</a></li>
+          <li><a href="elements.html">Elements</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <header>
+            <span class="symbol">
+              <script type="text/javascript">
+                function updateClock() {
+                  var now = new Date();
+                  var dname = now.getDay(),
+                    mo = now.getMonth(),
+                    dnum = now.getDate(),
+                    yr = now.getFullYear(),
+                    hou = now.getHours(),
+                    min = now.getMinutes(),
+                    sec = now.getSeconds(),
+                    pe = "AM";
+
+                  if (hou >= 12) {
+                    pe = "PM";
+                  }
+                  if (hou == 0) {
+                    hou = 12;
+                  }
+                  if (hou > 12) {
+                    hou = hou - 12;
+                  }
+
+                  Number.prototype.pad = function (digits) {
+                    for (var n = this.toString(); n.length < digits; n = 0 + n);
+                    return n;
+                  };
+
+                  var months = [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "Augest",
+                    "September",
+                    "October",
+                    "November",
+                    "December",
+                  ];
+                  var week = [
+                    "Sunday",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                  ];
+                  var ids = [
+                    "dayname",
+                    "month",
+                    "daynum",
+                    "year",
+                    "hour",
+                    "minutes",
+                    "seconds",
+                    "period",
+                  ];
+                  var values = [
+                    week[dname],
+                    months[mo],
+                    dnum.pad(2),
+                    yr,
+                    hou.pad(2),
+                    min.pad(2),
+                    sec.pad(2),
+                    pe,
+                  ];
+                  for (var i = 0; i < ids.length; i++)
+                    document.getElementById(ids[i]).firstChild.nodeValue =
+                      values[i];
+                }
+
+                function initClock() {
+                  updateClock();
+                  window.setInterval("updateClock()", 1);
+                }
+              </script>
+            </span>
+
+            <p>
+            </p>
+          </header>
+
+          <section class="tiles">
+            <article class="style1">
+              <p class="environment_data">Ambient Temperature</p>
+              <iframe
+                width="400"
+                height="260"
+                style="border: 1px solid #000000"
+                -webkit-border-radius:
+                130px;
+                src="https://thingspeak.com/channels/2013680/widgets/590262"
+                float
+                ;left;
+              ></iframe>
+              <a href="environmental data.html"> </a>
+            </article>
+            <article class="style2">
+              <p class="environment_data">Humidity</p>
+              <iframe
+                width="400"
+                height="260"
+                style="border: 1px solid #000000"
+                src="https://thingspeak.com/channels/2013680/widgets/590848"
+              ></iframe>
+              <a href="environmental data.html"> </a>
+            </article>
+            <article class="style3">
+              <p class="environment_data">Ambient light intensity</p>
+              <iframe
+                width="400"
+                height="260"
+                style="border: 1px solid #000000"
+                src="https://thingspeak.com/channels/2013680/widgets/590850"
+              ></iframe>
+            </article>
+          </section>
+          <section class="map_box" style="border: 1px solid #000000">
+            <div id="map"></div>
+          </section>
+
+          <style>
+            /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+            #map {
+              height: 500px;
+              width: 100%;
+            }
+            section.map_box {
+              width: 1215;
+            }
+            /* Optional: Makes the sample page fill the window. */
+            html,
+            body {
+              height: 100%;
+              margin: 0;
+              padding: 0;
+            }
+          </style>
+
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkVndT6GQZhfBcxvfsUICkccA6aMdccPM"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+          <script>
+            var map;
+            var x;
+            function loadmaps() {
+              $.getJSON(
+                "https://api.thingspeak.com/channels/2013680/fields/4/last.json?I146ATYZLJKAWAEG",
+                function (result) {
+                  var m = result;
+                  x = Number(m.field4);
+                  //alert(x);
+                }
+              );
+              $.getJSON(
+                "https://api.thingspeak.com/channels/2013680/fields/5/last.json?I146ATYZLJKAWAEG",
+                function (result) {
+                  var m = result;
+                  y = Number(m.field5);
+                }
+              ).done(function () {
+                initialize();
+              });
+            }
+            window.setInterval(function () {
+              loadmaps();
+            }, 9000);
+            function initialize() {
+              //alert(y);
+              var mapOptions = {
+                zoom: 18,
+                center: { lat: x, lng: y },
+              };
+              map = new google.maps.Map(
+                document.getElementById("map"),
+                mapOptions
+              );
+
+              var marker = new google.maps.Marker({
+                position: { lat: x, lng: y },
+                map: map,
+              });
+
+              var infowindow = new google.maps.InfoWindow({
+                content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+              });
+
+              google.maps.event.addListener(marker, "click", function () {
+                infowindow.open(map, marker);
+              });
+            }
+
+            google.maps.event.addDomListener(window, "load", initialize);
+          </script>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <div class="inner">
+          <section>
+            <h2>Get in touch</h2>
+            <form method="post" action="#">
+              <div class="fields">
+                <div class="field half">
+                  <input type="text" name="name" id="name" placeholder="Name" />
+                </div>
+                <div class="field half">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div class="field">
+                  <textarea
+                    name="message"
+                    id="message"
+                    placeholder="Message"
+                  ></textarea>
+                </div>
+              </div>
+              <ul class="actions">
+                <li><input type="submit" value="Send" class="primary" /></li>
+              </ul>
+            </form>
+          </section>
+          <section>
+            <h2>Follow</h2>
+            <ul class="icons">
+              <li>
+                <a href="#" class="icon brands style2 fa-twitter"
+                  ><span class="label">Twitter</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-facebook-f"
+                  ><span class="label">Facebook</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-instagram"
+                  ><span class="label">Instagram</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-dribbble"
+                  ><span class="label">Dribbble</span></a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/umeshmb99"
+                  class="icon brands style2 fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-500px"
+                  ><span class="label">500px</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon solid style2 fa-phone"
+                  ><span class="label">Phone</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon solid style2 fa-envelope"
+                  ><span class="label">Email</span></a
+                >
+              </li>
+            </ul>
+          </section>
+          <ul class="copyright">
+            <li>&copy; Umeshmb_. All rights reserved</li>
+            
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
